@@ -19,7 +19,7 @@ server:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
       properties:
         hibernate:
           criteria.literal_handling_mode: BIND

@@ -3,22 +3,23 @@ package blog.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "users")
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(name = "is_moderator", nullable = false)
     private byte isModerator;
 
-    @Column(nullable = false)
-    private LocalDateTime regTime;
+    @Column(name = "reg_time", nullable = false)
+    private Date regTime;
 
     @Column(nullable = false)
     private String name;
@@ -31,7 +32,25 @@ public class User implements Serializable {
 
     private String code;
 
-    @Column(length = 66500, columnDefinition = "Text")
+    @Column(name = "photo", length = 66500, columnDefinition = "TEXT")
     private String photo;
 
+    @OneToMany(mappedBy = "users")
+    private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users")
+    private List<PostComment> postComments = new ArrayList<>();
+
+    public User(byte isModerator, Date regTime, String name, String email, String password, Object code, Object photo){}
+
+    public User(byte isModerator, Date regTime, String name, String email, String password, String code, String photo) {
+        this.isModerator = isModerator;
+        this.regTime = regTime;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.code = code;
+        this.photo = photo;
+
+    }
 }

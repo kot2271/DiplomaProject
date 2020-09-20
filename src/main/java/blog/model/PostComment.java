@@ -3,28 +3,40 @@ package blog.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "post_comment")
-public class PostComment implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+@Table(name = "post_comments")
+public class PostComment {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private User userId;
+  @Column(name = "parent_id")
+  private Integer parentId;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post postId;
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
-    @Column(nullable = false)
-    private LocalDateTime time;
+  @ManyToOne
+  @JoinColumn(name = "post_id", nullable = false)
+  private Post post;
 
-    @Column
-    private String text;
+  @Column(nullable = false)
+  private Date time;
+
+  @Column(name = "text", nullable = false, length = 65600)
+  private String text;
+
+  public PostComment() {}
+
+  public PostComment(Integer parentId, Post post, User user, Date time, String text) {
+    this.parentId = parentId;
+    this.user = user;
+    this.post = post;
+    this.time = time;
+    this.text = text;
+  }
 }

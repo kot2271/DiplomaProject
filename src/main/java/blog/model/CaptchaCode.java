@@ -1,25 +1,34 @@
 package blog.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "captcha_code")
-public class CaptchaCode implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+@Table(name = "captcha_codes")
+public class CaptchaCode {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Column(nullable = false)
-    private LocalDateTime time;
+  @Column(nullable = false)
+  private Date time;
 
-    @Column(nullable = false)
-    private String code;
+  @Column(nullable = false)
+  private String code;
 
-    @Column(nullable = false)
-    private String secretCode;
+  @Column(name = "secret_code",nullable = false)
+  @JsonProperty("secret_code")
+  private String secretCode;
+
+  public CaptchaCode() {}
+
+  public CaptchaCode(Date time, String code, String secretCode) {
+    this.time = time;
+    this.code = code;
+    this.secretCode = secretCode;
+  }
 }
