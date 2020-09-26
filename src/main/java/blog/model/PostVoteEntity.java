@@ -1,10 +1,14 @@
 package blog.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "post_votes")
@@ -26,15 +30,5 @@ public class PostVoteEntity {
 
     @Column(nullable = false)
     private byte value;
-
-    public PostVoteEntity(){}
-
-
-    public PostVoteEntity(User user, Post post, Date time, byte value) {
-        this.user = user;
-        this.post = post;
-        this.time = time;
-        this.value = value;
-    }
 
 }

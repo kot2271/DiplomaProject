@@ -1,20 +1,15 @@
 package blog.controller;
 
 import blog.dto.Blog;
-import blog.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class ApiGeneralController {
-
-
-    @Autowired
-    private PostRepository postRepository;
-
 
     @GetMapping("/init")
     public Blog init() {

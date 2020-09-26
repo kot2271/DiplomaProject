@@ -2,10 +2,14 @@ package blog.model;
 
 import blog.model.enums.GlobalSettingName;
 import blog.model.enums.GlobalSettingValue;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "global_setting")
@@ -25,12 +29,5 @@ public class GlobalSetting {
     @Column(nullable = false)
     private GlobalSettingValue value;
 
-    public GlobalSetting(){}
-
-    public GlobalSetting(String code, GlobalSettingName name, GlobalSettingValue value) {
-        this.code = code;
-        this.name = name;
-        this.value = value;
-    }
 
 }

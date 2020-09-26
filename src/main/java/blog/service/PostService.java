@@ -4,5 +4,6 @@ import blog.model.Post;
 
 public interface PostService {
 
-    Post getPost (int id);
+  Post getPost(int id);
+
 }

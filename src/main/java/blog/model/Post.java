@@ -1,16 +1,20 @@
 package blog.model;
 
 import blog.model.enums.ModerationStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
-@Table(name = "posts")
+@Table(name = "post")
 public class Post  {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,32 +46,11 @@ public class Post  {
   @Column(name = "view_count")
   private int viewCount;
 
-  @OneToMany(mappedBy = "posts")
+  @OneToMany(mappedBy = "post")
   private List<PostComment> postComments = new ArrayList<>();
 
-  @OneToOne(mappedBy = "posts")
+  @OneToOne(mappedBy = "post")
   private Tag2Post tag2Post;
-
-  public Post() {}
-
-  public Post(
-      byte isActive,
-      ModerationStatus moderationStatus,
-      Integer moderatorId,
-      User user,
-      Date time,
-      String title,
-      String text,
-      int viewCount) {
-    this.isActive = isActive;
-    this.moderationStatus = moderationStatus;
-    this.moderatorId = moderatorId;
-    this.user = user;
-    this.time = time;
-    this.title = title;
-    this.text = text;
-    this.viewCount = viewCount;
-  }
 
   @Override
   public String toString() {

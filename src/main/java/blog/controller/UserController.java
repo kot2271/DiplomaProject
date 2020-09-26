@@ -5,7 +5,7 @@ import blog.mappers.UserMapper;
 import blog.model.User;
 import blog.repository.UserRepository;
 import blog.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,15 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-  @Autowired private UserService userService;
+  private final UserService userService;
 
-  @Autowired private UserMapper userMapper;
+  private final UserMapper userMapper;
 
-  @Autowired private UserRepository userRepository;
+  private final UserRepository userRepository;
+
 
   @GetMapping("/")
   public List<UserDTO> getAllUsersDTO() {

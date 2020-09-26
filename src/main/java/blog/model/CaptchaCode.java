@@ -1,11 +1,15 @@
 package blog.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "captcha_codes")
@@ -24,11 +28,4 @@ public class CaptchaCode {
   @JsonProperty("secret_code")
   private String secretCode;
 
-  public CaptchaCode() {}
-
-  public CaptchaCode(Date time, String code, String secretCode) {
-    this.time = time;
-    this.code = code;
-    this.secretCode = secretCode;
-  }
 }

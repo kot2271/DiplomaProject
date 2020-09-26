@@ -1,9 +1,13 @@
 package blog.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "tag2post")
@@ -20,9 +24,4 @@ public class Tag2Post {
   @JoinColumn(name = "tag_id")
   private Tag tag;
 
-  public Tag2Post() {}
-
-  public Tag2Post(Post post) {
-    this.post = post;
-  }
 }

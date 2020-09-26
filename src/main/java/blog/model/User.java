@@ -1,12 +1,16 @@
 package blog.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "users")
@@ -41,16 +45,6 @@ public class User {
     @OneToMany(mappedBy = "users")
     private List<PostComment> postComments = new ArrayList<>();
 
-    public User(byte isModerator, Date regTime, String name, String email, String password, Object code, Object photo){}
-
     public User(byte isModerator, Date regTime, String name, String email, String password, String code, String photo) {
-        this.isModerator = isModerator;
-        this.regTime = regTime;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.code = code;
-        this.photo = photo;
-
     }
 }

@@ -1,10 +1,14 @@
 package blog.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "post_comments")
@@ -30,13 +34,4 @@ public class PostComment {
   @Column(name = "text", nullable = false, length = 65600)
   private String text;
 
-  public PostComment() {}
-
-  public PostComment(Integer parentId, Post post, User user, Date time, String text) {
-    this.parentId = parentId;
-    this.user = user;
-    this.post = post;
-    this.time = time;
-    this.text = text;
-  }
 }
