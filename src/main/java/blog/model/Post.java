@@ -1,41 +1,43 @@
 package blog.model;
 
 import blog.model.enums.ModerationStatus;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
-@Table(name = "post")
-public class Post  {
+@EqualsAndHashCode(exclude = "tagList", callSuper = false)
+@ToString(exclude = "tagList")
+@Table(name = "posts")
+public class Post {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
   @Column(name = "is_active", nullable = false)
-  private byte isActive;
+  private Byte isActive;
 
-  @Column(nullable = false)
   @Enumerated(EnumType.STRING)
-  private ModerationStatus moderationStatus = ModerationStatus.NEW;
+  @Column(name = "moderation_status")
+  private ModerationStatus moderationStatus;
 
   @Column(name = "moderator_id")
   private Integer moderatorId;
 
   @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+  @JoinColumn(name = "user_id", nullable = false)
+  private User userId;
 
   @Column(nullable = false)
-  private Date time;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+  private LocalDateTime time;
 
   @Column(nullable = false)
   private String title;
@@ -43,17 +45,19 @@ public class Post  {
   @Column(name = "text", length = 65600, nullable = false)
   private String text;
 
-  @Column(name = "view_count")
-  private int viewCount;
+  @Column(name = "view_count", nullable = false)
+  private Integer viewCount;
 
-  @OneToMany(mappedBy = "post")
-  private List<PostComment> postComments = new ArrayList<>();
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "tag2post",
+      joinColumns = {@JoinColumn(name = "post_id")},
+      inverseJoinColumns = {@JoinColumn(name = "tag_id")})
+  private List<Tag> tagList = new ArrayList<>();
 
-  @OneToOne(mappedBy = "post")
-  private Tag2Post tag2Post;
+  @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+  private List<PostComment> postCommentList;
 
-  @Override
-  public String toString() {
-    return "Post{" + title + "}";
-  }
+  @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+  private List<PostVote> postVoteList;
 }

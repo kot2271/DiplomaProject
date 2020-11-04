@@ -1,31 +1,27 @@
 package blog.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "captcha_codes")
 public class CaptchaCode {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
   @Column(nullable = false)
-  private Date time;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
+  private LocalDateTime time;
 
   @Column(nullable = false)
   private String code;
 
   @Column(name = "secret_code",nullable = false)
-  @JsonProperty("secret_code")
   private String secretCode;
 
 }

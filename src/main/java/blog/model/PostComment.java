@@ -1,35 +1,33 @@
 package blog.model;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "post_comments")
 public class PostComment {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
   @Column(name = "parent_id")
   private Integer parentId;
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  private User userId;
 
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
-  private Post post;
+  private Post postId;
 
   @Column(nullable = false)
-  private Date time;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+  private LocalDateTime time;
 
   @Column(name = "text", nullable = false, length = 65600)
   private String text;
