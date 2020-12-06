@@ -3,6 +3,7 @@ package blog.service;
 import blog.model.CaptchaCode;
 import blog.repository.CaptchaRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class CaptchaService {
   private CaptchaRepository captchaRepository;
 

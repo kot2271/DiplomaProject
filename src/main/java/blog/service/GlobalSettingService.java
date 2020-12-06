@@ -4,7 +4,10 @@ import blog.dto.responseDto.GlobalSettingDto;
 import blog.model.GlobalSetting;
 import blog.model.enums.GlobalSettings;
 import blog.repository.GlobalSettingRepository;
+
+
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -13,11 +16,10 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class GlobalSettingService
 {
     private GlobalSettingRepository globalSettingRepository;
-
-
 
     public GlobalSettingDto getGlobalSetting(){
         List<GlobalSetting> globalSettingsList = globalSettingRepository.findAll();
@@ -75,5 +77,6 @@ public class GlobalSettingService
         globalSettingList.add(globalSetting3);
 
         globalSettingRepository.saveAll(globalSettingList);
+
     }
 }

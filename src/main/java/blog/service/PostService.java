@@ -11,6 +11,7 @@ import blog.model.User;
 import blog.model.enums.ModerationStatus;
 import blog.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,11 +28,12 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class PostService {
 
   private PostRepository postRepository;
 
-  private final int numberForAnnounce = 15;
+  private static final int NUMBER_FOR_ANNOUNCE = 15;
 
   @Transactional
   public List<PostDto> getAllPosts(Integer offset, Integer limit, String mode) {
@@ -177,7 +179,7 @@ public class PostService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     LocalDateTime dateTime = LocalDateTime.parse(addPostDto.getTime(), formatter);
     post.setTime(dateTime);
-    post.setUserId(user);
+    post.setUser(user);
     if (user.getIsModerator() == 1) {
       post.setModerationStatus(ModerationStatus.ACCEPTED);
       post.setModeratorId(user.getId());
@@ -313,9 +315,9 @@ public class PostService {
                 new PostDto(
                     post.getId(),
                     post.getTime(),
-                    new UserToPostDto(post.getUserId().getId(), post.getUserId().getName()),
+                    new UserToPostDto(post.getUser().getId(), post.getUser().getName()),
                     post.getTitle(),
-                    post.getText().substring(0, numberForAnnounce),
+                    post.getText().substring(0, NUMBER_FOR_ANNOUNCE),
                     (int)
                         (post.getPostVoteList().stream()
                             .filter(postVote -> postVote.getValue() == 1)
@@ -342,9 +344,9 @@ public class PostService {
                     postComment.getTime(),
                     postComment.getText(),
                     new UserToPostCommentDto(
-                        postComment.getUserId().getId(),
-                        postComment.getUserId().getName(),
-                        postComment.getUserId().getPhoto())))
+                        postComment.getUser().getId(),
+                        postComment.getUser().getName(),
+                        postComment.getUser().getPhoto())))
         .collect(toList());
   }
 
@@ -355,9 +357,9 @@ public class PostService {
     return new OnePostDto(
         post.getId(),
         post.getTime(),
-        new UserToPostDto(post.getUserId().getId(), post.getUserId().getName()),
+        new UserToPostDto(post.getUser().getId(), post.getUser().getName()),
         post.getTitle(),
-        post.getText().substring(0, numberForAnnounce),
+        post.getText().substring(0, NUMBER_FOR_ANNOUNCE),
         (int)
             (post.getPostVoteList().stream().filter(postVote -> postVote.getValue() == 1).count()),
         (int)

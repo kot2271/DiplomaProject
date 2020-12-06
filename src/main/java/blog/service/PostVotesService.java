@@ -3,17 +3,23 @@ package blog.service;
 import blog.model.Post;
 import blog.model.PostVote;
 import blog.repository.PostVotesRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Service
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostVotesService {
     private PostVotesRepository postVotesRepository;
 
     public boolean takeLikeOrDislikeToPost(Post post, Integer userId, int likeOrDislike){
         Optional<PostVote> postVoteOptional = postVotesRepository.findByPostIdAndUserId(post.getId(), userId);
 
-        if (!postVoteOptional.isPresent()){
+        if (postVoteOptional.isEmpty()){
             saveLikeOrDislike(post, userId, likeOrDislike);
             return true;
         }

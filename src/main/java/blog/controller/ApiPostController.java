@@ -8,24 +8,31 @@ import blog.model.Post;
 import blog.model.Tag;
 import blog.model.User;
 import blog.service.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/post")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class ApiPostController {
 
-  private final PostService postService;
-  private final AuthService authService;
-  private final UserService userService;
-  private final TagService tagService;
-  private final Tag2PostService tag2PostService;
-  private final PostVotesService postVotesService;
-  private final GlobalSettingService globalSettingService;
+  private PostService postService;
+  private AuthService authService;
+  private UserService userService;
+  private TagService tagService;
+  private Tag2PostService tag2PostService;
+  private PostVotesService postVotesService;
+  private GlobalSettingService globalSettingService;
 
   @GetMapping
   public ResponseEntity<?> getAllPosts(
@@ -120,9 +127,13 @@ public class ApiPostController {
     Integer userId = authService.getUserIdOnSessionId();
     authService.checkAuth(userId);
     User userFromDB = userService.getUserById(userId);
-    if (userFromDB.getIsModerator() == 0) {
+//    if (userFromDB.getIsModerator() == 0) {
+//      throw new BadRequestException("Зайдите в аккаунт модератора");
+//    }
+    if (userFromDB.getName().contains("USER")){
       throw new BadRequestException("Зайдите в аккаунт модератора");
     }
+
     PostListDto postListDto = postService.getPostsToModeration(offset, limit, status, userId);
     return ResponseEntity.ok(postListDto);
   }
@@ -147,23 +158,29 @@ public class ApiPostController {
     return ResponseEntity.ok(new ResultFalseDto());
   }
 
+  @Valid
   private ResultFalseWithErrorsDto checkPostsTitleAndText(AddPostDto addPostDto) {
     ResultFalseWithErrorsDto resultFalse = new ResultFalseWithErrorsDto();
-    if (addPostDto.getText().length() < 15) {
-      resultFalse.addNewError("text", "Текст должен быть больше 15 символов");
-    }
-    if (addPostDto.getTitle().equals("")) {
-      resultFalse.addNewError("title", "Пустой заголовок :(");
-    }
+    addPostDto.getText();
+//    if (addPostDto.getText().length() < 15) {
+//      resultFalse.addNewError("text", "Текст должен быть больше 15 символов");
+//    }
+//    if (addPostDto.getTitle().equals("")) {
+//      resultFalse.addNewError("title", "Пустой заголовок :(");
+//    }
+    addPostDto.getTitle();
     return resultFalse;
   }
 
   private void canAddOrEditPost(User user) {
     boolean canAddPost = globalSettingService.getGlobalSetting().isMultiUserMode();
     if (!canAddPost) {
-      if (user.getIsModerator() != 1) {
+      if (user.getName().contains("MODERATOR")){
         throw new BadRequestException("Создать пост невозможно");
       }
+//      if (user.getIsModerator() != 1) {
+//        throw new BadRequestException("Создать пост невозможно");
+//      }
     }
   }
 }

@@ -2,14 +2,15 @@ package blog.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-@Configuration
+@Component
 public class MailConfig {
+
   @Value("${spring.mail.host}")
   private String host;
 
@@ -22,10 +23,10 @@ public class MailConfig {
   @Value("${spring.mail.port}")
   private String port;
 
-  @Value("${spring.mail.protocol}")
+  @Value("${spring.mail.properties.mail.transport.protocol}")
   private String protocol;
 
-  @Value("${mail.debug}")
+  @Value("${spring.mail.properties.mail.debug}")
   private String debug;
 
   @Bean

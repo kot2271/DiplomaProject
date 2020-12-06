@@ -3,6 +3,7 @@ package blog.service;
 import blog.model.Tag;
 import blog.repository.TagRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class TagService {
     private TagRepository tagRepository;
 

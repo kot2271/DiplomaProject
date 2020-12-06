@@ -2,6 +2,7 @@ package blog.service;
 
 import blog.exceptions.UnauthorizedException;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -9,9 +10,10 @@ import java.util.Map;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class AuthService {
 
-  private final Map<String, Integer> authorizedUsers;
+  private Map<String, Integer> authorizedUsers;
 
   public void saveSession(Integer userId) {
     String sessionId1 = RequestContextHolder.currentRequestAttributes().getSessionId();

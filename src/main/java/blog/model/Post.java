@@ -33,7 +33,7 @@ public class Post {
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
-  private User userId;
+  private User user;
 
   @Column(nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")

@@ -6,6 +6,7 @@ import blog.model.PostComment;
 import blog.model.User;
 import blog.repository.PostCommentRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,17 +14,18 @@ import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 public class PostCommentService {
   private PostCommentRepository postCommentRepository;
 
   public Integer addNewCommentToPost(
       AddCommentToPostDto addCommentToPostDto, Post post, User user) {
     PostComment postComment = new PostComment();
-    postComment.setPostId(post);
+    postComment.setPost(post);
     postComment.setParentId(addCommentToPostDto.getParentId());
     postComment.setText(addCommentToPostDto.getText());
     postComment.setTime(LocalDateTime.now());
-    postComment.setUserId(user);
+    postComment.setUser(user);
     postCommentRepository.save(postComment);
     return postComment.getId();
   }

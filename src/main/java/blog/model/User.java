@@ -3,6 +3,9 @@ package blog.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,4 +46,11 @@ public class User {
   @ToString.Exclude
   @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<PostComment> postCommentList;
+
+  @Secured("MODERATOR")
+  public String getName() {
+    SecurityContext securityContext = SecurityContextHolder.getContext();
+    return securityContext.getAuthentication().getName();
+  }
+
 }

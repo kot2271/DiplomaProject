@@ -1,7 +1,7 @@
 package blog.configuration;
 
 import blog.service.ImageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,11 @@ public class MvcConfig implements WebMvcConfigurer, CommandLineRunner {
   @Value("${upload.path}")
   private String location;
 
-  @Autowired
   private ImageService imageService;
+
+  public MvcConfig (ImageService imageService) {
+    this.imageService = imageService;
+  }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {

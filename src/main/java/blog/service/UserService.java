@@ -4,7 +4,8 @@ import blog.dto.requestDto.ProfileDto;
 import blog.dto.requestDto.RegistrationDto;
 import blog.model.User;
 import blog.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,11 +25,12 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.thymeleaf.util.StringUtils.randomAlphanumeric;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
-    @Value("${upload.path}")
+    private UserRepository userRepository;
+//    @Value("${upload.path}")
     private String location;
 
     public User getUserByEmailAndPassword(String email, String password) {

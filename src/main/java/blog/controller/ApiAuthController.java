@@ -9,6 +9,8 @@ import blog.model.CaptchaCode;
 import blog.model.User;
 import blog.service.*;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,24 +28,26 @@ public class ApiAuthController {
   private final CaptchaService captchaService;
   private final MailSender mailSender;
 
+
   @PostMapping("login")
-  public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+  public Object login(@RequestBody LoginDto loginDto) {
     User userFromDB =
         userService.getUserByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
     return getUserResponseEntity(userFromDB);
   }
 
   @GetMapping("check")
-  public ResponseEntity<?> check() {
+  public Object check() {
     Integer userId = authService.getUserIdOnSessionId();
     User userFromDB = userService.getUserById(userId);
     return getUserResponseEntity(userFromDB);
   }
 
   @GetMapping("logout")
-  public ResponseEntity<?> logout() {
+  public ResultTrueDto logout() {
     authService.deleteSession();
-    return ResponseEntity.ok(new ResultTrueDto());
+    return new ResultTrueDto();
+
   }
 
   @GetMapping("captcha")
@@ -54,44 +58,43 @@ public class ApiAuthController {
   }
 
   @PostMapping("register")
-  public ResponseEntity<?> registration(@RequestBody RegistrationDto registrationDto) {
+  public Object registration(@RequestBody RegistrationDto registrationDto) {
     ResultFalseWithErrorsDto resultFalse = preRegistrationVerification(registrationDto);
     if (resultFalse.getErrors().size() > 0) {
-      return ResponseEntity.ok(resultFalse);
+//      return ResponseEntity.ok(resultFalse);
+      return resultFalse;
     }
     userService.registration(registrationDto);
-    return ResponseEntity.ok(new ResultTrueDto());
+//    return ResponseEntity.ok(new ResultTrueDto());
+    return new ResultTrueDto();
   }
 
   @PostMapping("restore")
-  public ResponseEntity<?> restore(@RequestBody EmailDto emailDto) {
+  public Object restore(@RequestBody EmailDto emailDto) {
     if (!userService.userExistByEmail(emailDto.getEmail())) {
-      return ResponseEntity.ok(new ResultFalseDto());
+//      return ResponseEntity.ok(new ResultFalseDto());
+      return new ResultFalseDto();
     }
-    String activationCode = userService.getUsersRestorePasswordCode(emailDto.getEmail());
-    String url = "http://localhost:8080/login/change-password/" + activationCode;
-    String message =
-        "Hello! To restore your password, go to next link:"
-            + "<a href="
-            + url
-            + ">Восстановление пароля</a>";
-    mailSender.send(emailDto.getEmail(), "Restore password", message);
+    mailSender.send(emailDto.getEmail(), "Restore password", "message");
 
-    return ResponseEntity.ok(new ResultTrueDto());
+//    return ResponseEntity.ok(new ResultTrueDto());
+    return new ResultTrueDto();
   }
 
   @PostMapping("password")
-  public ResponseEntity<?> password(@RequestBody PasswordDto passwordDto) {
+  public Object password(@RequestBody PasswordDto passwordDto) {
     User user = userService.getUserByRestoreCode(passwordDto.getCode());
     ResultFalseWithErrorsDto resultFalse = preRestorePasswordVerification(passwordDto, user);
     if (resultFalse.getErrors().size() > 0) {
-      return ResponseEntity.ok(resultFalse);
+//      return ResponseEntity.ok(resultFalse);
+      return resultFalse;
     }
     userService.restoreUserPassword(user, passwordDto.getPassword());
-    return ResponseEntity.ok(new ResultTrueDto());
+//    return ResponseEntity.ok(new ResultTrueDto());
+    return new ResultTrueDto();
   }
 
-  private ResponseEntity<?> getUserResponseEntity(User userFromDB) {
+  private Object getUserResponseEntity(User userFromDB) {
     if (userFromDB != null) {
       Integer countNewPosts = null;
       if (userFromDB.getIsModerator() == 1) {
@@ -100,7 +103,8 @@ public class ApiAuthController {
       }
       return getAuthUserResponseEntity(userFromDB, false, false, countNewPosts);
     }
-    return ResponseEntity.ok(new ResultFalseDto());
+//    return ResponseEntity.ok(new ResultFalseDto());
+    return new ResultFalseDto();
   }
 
   private ResponseEntity<ResultTrueDtoWithUser> getAuthUserResponseEntity(

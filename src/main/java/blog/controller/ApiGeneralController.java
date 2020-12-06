@@ -9,6 +9,8 @@ import blog.model.Post;
 import blog.model.PostComment;
 import blog.model.User;
 import blog.service.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,17 +29,18 @@ import static org.thymeleaf.util.StringUtils.randomAlphanumeric;
 
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class ApiGeneralController {
 
-    private final Tag2PostService tag2PostService;
-    private final PostService postService;
-    private final AuthService authService;
-    private final UserService userService;
-    private final GlobalSettingService globalSettingService;
-    private final PostCommentService postCommentService;
+    private Tag2PostService tag2PostService;
+    private PostService postService;
+    private AuthService authService;
+    private UserService userService;
+    private GlobalSettingService globalSettingService;
+    private PostCommentService postCommentService;
     @Value("${upload.path}")
-    private final String location;
+    private String location;
 
     @GetMapping("/api/init")
    public ResponseEntity<?> init(){

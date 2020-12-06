@@ -19,11 +19,11 @@ public class PostComment {
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
-  private User userId;
+  private User user;
 
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
-  private Post postId;
+  private Post post;
 
   @Column(nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
