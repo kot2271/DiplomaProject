@@ -29,7 +29,7 @@ public class TagServiceTest {
 
     @Test
     @SneakyThrows
-    public void tagsToPost(){
+    public void tagsToPost() {
         List<String> tags = new ArrayList<>();
         tags.add("TEST");
         List<Tag> tagList = tagService.tagsToPost(tags);

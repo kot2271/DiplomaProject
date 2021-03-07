@@ -19,8 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import blog.dto.requestDto.AddCommentToPostDto;
 import blog.dto.requestDto.LoginDto;
 import blog.dto.requestDto.ModerationPostDto;
-import blog.dto.responseDto.GlobalSettingDto;
-import blog.model.enums.GlobalSettings;
+import blog.dto.responseDto.GlobalSettingsDto;
+import blog.model.enums.GlobalSetting;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,10 +58,11 @@ public class ApiGeneralControllerTest {
         apiAuthController.login(loginDto);
 
         String userJson = om.writeValueAsString(loginDto);
-        mvc.perform(post("/api/auth/login")
-                .session(session)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(userJson))
+        mvc.perform(
+                post("/api/auth/login")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJson))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -72,7 +73,7 @@ public class ApiGeneralControllerTest {
         mvc.perform(get("/api/init"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.copyright", is("Skillbox")));
+                .andExpect(jsonPath("$.copyright", is("Alex Coont")));
     }
 
     @Test
@@ -92,21 +93,21 @@ public class ApiGeneralControllerTest {
         mvc.perform(get("/api/settings"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath(GlobalSettings.MULTIUSER_MODE.toString(), is(false)))
-                .andExpect(jsonPath(GlobalSettings.POST_PREMODERATION.toString(), is(false)))
-                .andExpect(jsonPath(GlobalSettings.STATISTICS_IS_PUBLIC.toString(), is(false)));
+                .andExpect(jsonPath(GlobalSetting.MULTIUSER_MODE.toString(), is(false)))
+                .andExpect(jsonPath(GlobalSetting.POST_PREMODERATION.toString(), is(false)))
+                .andExpect(jsonPath(GlobalSetting.STATISTICS_IS_PUBLIC.toString(), is(false)));
     }
 
     @Test
     @SneakyThrows
     public void putSettings() {
-        GlobalSettingDto globalSettingDto = new GlobalSettingDto
-                (false, false, false);
-        String json = om.writeValueAsString(globalSettingDto);
-        mvc.perform(put("/api/settings")
-                .session(session)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+        GlobalSettingsDto globalSettingsDto = new GlobalSettingsDto(false, false, false);
+        String json = om.writeValueAsString(globalSettingsDto);
+        mvc.perform(
+                put("/api/settings")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.MULTIUSER_MODE", is(false)));
@@ -128,8 +129,7 @@ public class ApiGeneralControllerTest {
     @Test
     @SneakyThrows
     public void getMyStatistics() {
-        mvc.perform(get("/api/statistics/my")
-                .session(session))
+        mvc.perform(get("/api/statistics/my").session(session))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.viewsCount", is(65)));
@@ -140,10 +140,11 @@ public class ApiGeneralControllerTest {
     public void moderation() {
         ModerationPostDto moderationPostDto = new ModerationPostDto("ACCEPT", 3);
         String json = om.writeValueAsString(moderationPostDto);
-        mvc.perform(post("/api/moderation")
-                .session(session)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+        mvc.perform(
+                post("/api/moderation")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -151,13 +152,14 @@ public class ApiGeneralControllerTest {
     @Test
     @SneakyThrows
     public void commentToPost() {
-        AddCommentToPostDto addCommentToPostDto = new AddCommentToPostDto
-                (null, 1, "testtesttesttesttesttest");
+        AddCommentToPostDto addCommentToPostDto =
+                new AddCommentToPostDto(null, 1, "testtesttesttesttesttest");
         String json = om.writeValueAsString(addCommentToPostDto);
-        mvc.perform(post("/api/comment")
-                .session(session)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+        mvc.perform(
+                post("/api/comment")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(9)));

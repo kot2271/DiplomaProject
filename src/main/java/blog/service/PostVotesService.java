@@ -4,7 +4,6 @@ import blog.model.Post;
 import blog.model.PostVote;
 import blog.repository.PostVotesRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,31 +11,38 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class PostVotesService {
     private PostVotesRepository postVotesRepository;
 
-    public boolean takeLikeOrDislikeToPost(Post post, Integer userId, int likeOrDislike){
-        Optional<PostVote> postVoteOptional = postVotesRepository.findByPostIdAndUserId(post.getId(), userId);
+    /**
+     * добавление лайка или дизлайка к посту, возвращает false, если лайк или дизлайк уже стоит, а
+     * пользователь пытается поставить во второй раз
+     */
+    public boolean takeLikeOrDislikeToPost(Post post, Integer userId, int likeOrDis) {
+        Optional<PostVote> postVoteOptional =
+                postVotesRepository.findByPostIdAndUserId(post.getId(), userId);
 
-        if (postVoteOptional.isEmpty()){
-            saveLikeOrDislike(post, userId, likeOrDislike);
+        if (postVoteOptional.isEmpty()) {
+            saveLikeOrDislike(post, userId, likeOrDis);
             return true;
         }
-        if (postVoteOptional.get().getValue() == likeOrDislike) {
+        if (postVoteOptional.get().getValue() == likeOrDis) {
             return false;
         }
         PostVote postVote = postVoteOptional.get();
-        postVote.setValue((byte) likeOrDislike);
+        postVote.setValue((byte) likeOrDis);
         postVote.setTime(LocalDateTime.now());
         postVotesRepository.save(postVote);
         return true;
     }
 
-    private void saveLikeOrDislike (Post post, Integer userId, int likeOrDislike){
+    /**
+     * сохранение лайка или дизлайка
+     */
+    private void saveLikeOrDislike(Post post, Integer userId, int likeOrDis) {
         PostVote postVote = new PostVote();
         postVote.setTime(LocalDateTime.now());
-        postVote.setValue((byte) likeOrDislike);
+        postVote.setValue((byte) likeOrDis);
         postVote.setPostId(post);
         postVote.setUserId(userId);
         postVotesRepository.save(postVote);

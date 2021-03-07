@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class ProfileDto {
     private Byte removePhoto;
     private String name;
-    private String password;
     private String email;
+    private String password;
 }

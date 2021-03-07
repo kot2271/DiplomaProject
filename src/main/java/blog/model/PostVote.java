@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "post_votes")
 public class PostVote {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,10 +23,9 @@ public class PostVote {
     private Post postId;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime time;
 
     @Column(nullable = false)
     private Byte value;
-
 }

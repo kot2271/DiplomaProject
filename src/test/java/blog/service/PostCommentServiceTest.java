@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "/clean.sql")
 })
 public class PostCommentServiceTest {
-
     @Autowired
     private PostCommentService postCommentService;
 

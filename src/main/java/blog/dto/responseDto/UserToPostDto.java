@@ -7,5 +7,4 @@ import lombok.*;
 public class UserToPostDto {
   private Integer id;
   private String name;
-
 }

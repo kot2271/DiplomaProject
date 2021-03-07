@@ -2,15 +2,14 @@ package blog.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-@Component
+@Configuration
 public class MailConfig {
-
   @Value("${spring.mail.host}")
   private String host;
 
@@ -21,19 +20,19 @@ public class MailConfig {
   private String password;
 
   @Value("${spring.mail.port}")
-  private String port;
+  private int port;
 
-  @Value("${spring.mail.properties.mail.transport.protocol}")
+  @Value("${spring.mail.protocol}")
   private String protocol;
 
-  @Value("${spring.mail.properties.mail.debug}")
+  @Value("${mail.debug}")
   private String debug;
 
   @Bean
   public JavaMailSender getMailSender() {
     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
     mailSender.setHost(host);
-    mailSender.setPort(Integer.parseInt(port));
+    mailSender.setPort(port);
     mailSender.setUsername(username);
     mailSender.setPassword(password);
     Properties properties = mailSender.getJavaMailProperties();
@@ -42,3 +41,4 @@ public class MailConfig {
     return mailSender;
   }
 }
+

@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "/clean.sql")
 })
 public class Tag2PostServiceTest {
-
     @Autowired
     private Tag2PostService tag2PostService;
 

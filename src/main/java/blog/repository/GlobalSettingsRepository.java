@@ -1,5 +1,5 @@
 package blog.repository;
-import blog.model.GlobalSetting;
+import blog.model.GlobalSettings;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,9 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface GlobalSettingRepository extends CrudRepository<GlobalSetting, Integer> {
+public interface GlobalSettingsRepository extends CrudRepository<GlobalSettings, Integer> {
 
-    List<GlobalSetting> findAll();
+    /**
+     * поиск всех настроек блога
+     */
+    List<GlobalSettings> findAll();
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE global_settings SET value = :value WHERE code = :code", nativeQuery = true)

@@ -11,9 +11,13 @@ import java.util.Optional;
 
 @Repository
 public interface PostVotesRepository extends CrudRepository<PostVote, Integer> {
-  @Query(
-      value = "SELECT * FROM post_votes " + "WHERE user_id = :user_id " + "AND post_id = :post_id",
-      nativeQuery = true)
-  Optional<PostVote> findByPostIdAndUserId(
-      @Param("post_id") Integer postId, @Param("user_id") Integer userId);
+
+    /**
+     * поиск лайка по айди юзера и поста
+     */
+    @Query(
+            value = "SELECT * FROM post_votes " + "WHERE user_id = :user_id " + "AND post_id = :post_id",
+            nativeQuery = true)
+    Optional<PostVote> findByPostIdAndUserId(
+            @Param("post_id") Integer postId, @Param("user_id") Integer userId);
 }

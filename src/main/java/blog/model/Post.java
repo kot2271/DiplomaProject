@@ -17,47 +17,48 @@ import java.util.List;
 @ToString(exclude = "tagList")
 @Table(name = "posts")
 public class Post {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
 
-  @Column(name = "is_active", nullable = false)
-  private Byte isActive;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "moderation_status")
-  private ModerationStatus moderationStatus;
+    @Column(name = "is_active", nullable = false)
+    private Byte isActive;
 
-  @Column(name = "moderator_id")
-  private Integer moderatorId;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "moderation_status")
+    private ModerationStatus moderationStatus;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+    @Column(name = "moderator_id")
+    private Integer moderatorId;
 
-  @Column(nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
-  private LocalDateTime time;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User userId;
 
-  @Column(nullable = false)
-  private String title;
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
+    private LocalDateTime time;
 
-  @Column(name = "text", length = 65600, nullable = false)
-  private String text;
+    @Column(nullable = false)
+    private String title;
 
-  @Column(name = "view_count", nullable = false)
-  private Integer viewCount;
+    @Column(length = 1000, nullable = false)
+    private String text;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "tag2post",
-      joinColumns = {@JoinColumn(name = "post_id")},
-      inverseJoinColumns = {@JoinColumn(name = "tag_id")})
-  private List<Tag> tagList = new ArrayList<>();
+    @Column(name = "view_count", nullable = false)
+    private Integer viewCount;
 
-  @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
-  private List<PostComment> postCommentList;
+    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+    private List<PostComment> postCommentList;
 
-  @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
-  private List<PostVote> postVoteList;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "tag2post",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")})
+    private List<Tag> tagList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+    private List<PostVote> postVoteList;
 }

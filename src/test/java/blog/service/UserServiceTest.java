@@ -29,23 +29,23 @@ public class UserServiceTest {
 
     @Test
     @SneakyThrows
-    public void getUserByEmailAndPassword(){
+    public void getUserByEmailAndPassword() {
         User user = userService.getUserByEmailAndPassword("rty@mail.ru", "qweasdzxc");
         assertEquals("Roman", user.getName());
     }
 
     @Test
     @SneakyThrows
-    public void getUserById(){
+    public void getUserById() {
         User user = userService.getUserById(2);
         assertEquals("Artem", user.getName());
     }
 
     @Test
     @SneakyThrows
-    public void registration(){
-        RegistrationDto registrationDto = new RegistrationDto("test@test.test", "Test",
-                "testtest", "9639", "rksfyruau6ucvfrggwagrq");
+    public void registration() {
+        RegistrationDto registrationDto =
+                new RegistrationDto("test@test.test", "Test", "testtest", "9639", "rksfyruau6ucvfrggwagrq");
         userService.registration(registrationDto);
         User user = userService.getUserByEmailAndPassword("test@test.test", "testtest");
         assertEquals("Test", user.getName());
@@ -53,14 +53,14 @@ public class UserServiceTest {
 
     @Test
     @SneakyThrows
-    public void userExistByEmail(){
+    public void userExistByEmail() {
         boolean userExist = userService.userExistByEmail("qwe@mail.ru");
         assertTrue(userExist);
     }
 
     @Test
     @SneakyThrows
-    public void getUsersRestorePasswordCode(){
+    public void getUsersRestorePasswordCode() {
         String restoreCode = userService.getUsersRestorePasswordCode("asd@mail.ru");
         User user = userService.getUserById(2);
         assertEquals(restoreCode, user.getCode());
@@ -68,16 +68,15 @@ public class UserServiceTest {
 
     @Test
     @SneakyThrows
-    public void getUserByRestoreCode(){
+    public void getUserByRestoreCode() {
         String restoreCode = userService.getUsersRestorePasswordCode("rty@mail.ru");
         User user = userService.getUserByRestoreCode(restoreCode);
         assertEquals("2020-04-09T19:13:25", user.getRegTime().toString());
-
     }
 
     @Test
     @SneakyThrows
-    public void restoreUserPassword(){
+    public void restoreUserPassword() {
         User user = userService.getUserById(1);
         userService.restoreUserPassword(user, "qqqqqq");
         User fromDB = userService.getUserById(1);

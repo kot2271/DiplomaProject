@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class CommentToPostDto {
+
   private Integer id;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
@@ -18,3 +19,4 @@ public class CommentToPostDto {
 
   UserToPostCommentDto user;
 }
+

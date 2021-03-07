@@ -8,5 +8,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class TagListDto {
+
   private List<TagDto> tags;
 }

@@ -12,13 +12,15 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = "postList")
 @Table(name = "tags")
 public class Tag {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false)
   private String name;
 
-  @ManyToMany(mappedBy = "tags")
+  @ManyToMany(mappedBy = "tagList")
   private Set<Post> postList = new HashSet<>();
 }
+

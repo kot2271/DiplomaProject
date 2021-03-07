@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class OnePostDto extends PostDto {
+
   private String text;
 
   private List<CommentToPostDto> comments;
@@ -18,19 +19,19 @@ public class OnePostDto extends PostDto {
   private List<String> tags;
 
   public OnePostDto(
-      Integer id,
-      LocalDateTime time,
-      UserToPostDto user,
-      String title,
-      String announce,
-      Integer likeCount,
-      Integer dislikeCount,
-      Integer commentCount,
-      Integer viewCount,
-      String text,
-      List<CommentToPostDto> comments,
-      List<String> tags) {
-    super(id, time, user, title, announce, viewCount, likeCount, dislikeCount, commentCount);
+          Integer id,
+          LocalDateTime time,
+          UserToPostDto user,
+          String title,
+          String announce,
+          Integer likeCount,
+          Integer dislikeCount,
+          Integer commentCount,
+          Integer viewCount,
+          String text,
+          List<CommentToPostDto> comments,
+          List<String> tags) {
+    super(id, time, user, title, announce, likeCount, dislikeCount, commentCount, viewCount);
     this.text = text;
     this.comments = comments;
     this.tags = tags;

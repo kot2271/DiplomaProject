@@ -11,14 +11,15 @@ import java.nio.file.Paths;
 @Service
 @Transactional
 public class ImageService {
-  @Value("${upload.path}")
-  private String location;
 
-  public void init() {
-    try {
-      Files.createDirectories(Paths.get(location));
-    } catch (IOException e) {
-      throw new RuntimeException("Не удалось инициализировать хранилище", e);
+    @Value("${upload.path}")
+    private String location;
+
+    public void init() {
+        try {
+            Files.createDirectories(Paths.get(location));
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize storage", e);
+        }
     }
-  }
 }

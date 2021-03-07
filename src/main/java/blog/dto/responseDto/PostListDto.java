@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class PostListDto {
+
   private Integer count;
 
   private List<PostDto> posts;
@@ -18,3 +19,4 @@ public class PostListDto {
 
   private String mode;
 }
+

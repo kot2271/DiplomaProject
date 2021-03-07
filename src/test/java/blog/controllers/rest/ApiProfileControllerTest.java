@@ -49,10 +49,11 @@ public class ApiProfileControllerTest {
         apiAuthController.login(loginDto);
 
         String userJson = om.writeValueAsString(loginDto);
-        mvc.perform(post("/api/auth/login")
-                .session(session)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(userJson))
+        mvc.perform(
+                post("/api/auth/login")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJson))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -63,15 +64,12 @@ public class ApiProfileControllerTest {
     @Test
     @SneakyThrows
     public void editProfile() {
-        ProfileDto dto = new ProfileDto((byte) 1, "John", "asd@mail.ru", null);
+        ProfileDto dto = new ProfileDto((byte) 1, "Alex", "asd@mail.ru", null);
         String json = om.writeValueAsString(dto);
-        mvc.perform(post(basePath)
-                .session(session)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+        mvc.perform(
+                post(basePath).session(session).contentType(MediaType.APPLICATION_JSON).content(json))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is(true)));
-
     }
 }

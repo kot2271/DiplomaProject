@@ -11,5 +11,5 @@ import java.util.Map;
 public class CalendarDto {
 
     private List<String> years;
-    private Map<String,Integer> posts;
+    private Map<String, Integer> posts;
 }

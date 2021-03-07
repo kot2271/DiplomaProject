@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "captcha_codes")
 public class CaptchaCode {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
 
-  @Column(nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
-  private LocalDateTime time;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-  @Column(nullable = false)
-  private String code;
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
+    private LocalDateTime time;
 
-  @Column(name = "secret_code",nullable = false)
-  private String secretCode;
+    @Column(nullable = false)
+    private String code;
 
+    @Column(name = "secret_code", nullable = false)
+    private String secretCode;
 }

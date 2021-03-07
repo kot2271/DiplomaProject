@@ -36,14 +36,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(value = "/application-test.properties")
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "/data_test.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "clean.sql")
+        @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "/clean.sql")
 })
 public class ApiAuthControllerTest {
-    @Autowired
-    private MockMvc mvc;
 
-    @Autowired
-    private ApiAuthController apiAuthController;
+    @Autowired private MockMvc mvc;
+
+    @Autowired private ApiAuthController apiAuthController;
 
     private static final ObjectMapper om = new ObjectMapper();
 
@@ -56,10 +55,11 @@ public class ApiAuthControllerTest {
         apiAuthController.login(loginDto);
 
         String userJson = om.writeValueAsString(loginDto);
-        mvc.perform(post("/api/auth/login")
-                .session(session)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(userJson))
+        mvc.perform(
+                post("/api/auth/login")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJson))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -70,9 +70,7 @@ public class ApiAuthControllerTest {
         LoginDto loginDto = new LoginDto("rty@mail.ru", "qweasdzxc");
         String json = om.writeValueAsString(loginDto);
 
-        mvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+        mvc.perform(post("/api/auth/login").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.user.name", is("Roman")));
@@ -82,8 +80,7 @@ public class ApiAuthControllerTest {
     @SneakyThrows
     public void check() {
         RequestContextHolder.currentRequestAttributes().getSessionId();
-        mvc.perform(get("/api/auth/check")
-                .session(session))
+        mvc.perform(get("/api/auth/check").session(session))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.user.id", is(2)));
@@ -92,8 +89,7 @@ public class ApiAuthControllerTest {
     @Test
     @SneakyThrows
     public void logout() {
-        mvc.perform(get("/api/auth/logout")
-                .session(session))
+        mvc.perform(get("/api/auth/logout").session(session))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is(true)));
@@ -102,9 +98,10 @@ public class ApiAuthControllerTest {
     @Test
     @SneakyThrows
     public void captcha() {
-        mvc.perform(get("/api/auth/captcha")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+        mvc.perform(
+                get("/api/auth/captcha")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -112,14 +109,14 @@ public class ApiAuthControllerTest {
     @Test
     @SneakyThrows
     public void register() {
-        RegistrationDto registrationDto = new RegistrationDto
-                ("test@test.test", "test", "password", "9639",
-                        "rksfyruau6ucvfrggwagrq");
+        RegistrationDto registrationDto =
+                new RegistrationDto("test@test.test", "test", "password", "9639", "rksfyruau6ucvfrggwagrq");
         String json = om.writeValueAsString(registrationDto);
-        mvc.perform(post("/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+        mvc.perform(
+                post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is(true)));
@@ -130,10 +127,11 @@ public class ApiAuthControllerTest {
     public void restore() {
         EmailDto emailDto = new EmailDto("asd@mail.ru");
         String json = om.writeValueAsString(emailDto);
-        mvc.perform(post("/api/auth/restore")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+        mvc.perform(
+                post("/api/auth/restore")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is(true)));
@@ -142,12 +140,11 @@ public class ApiAuthControllerTest {
     @Test
     @SneakyThrows
     public void password() {
-        PasswordDto passwordDto = new PasswordDto("HWQfassdJjkgd12552899SJasfklga", "qeqeqeq",
-                "9639", "rksfyruau6ucvfrggwagrq");
+        PasswordDto passwordDto =
+                new PasswordDto(
+                        "HWQfassdJjkgd12552899SJasfklga", "qeqeqeq", "9639", "rksfyruau6ucvfrggwagrq");
         String json = om.writeValueAsString(passwordDto);
-        mvc.perform(post("/api/auth/password")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+        mvc.perform(post("/api/auth/password").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result", is(true)));

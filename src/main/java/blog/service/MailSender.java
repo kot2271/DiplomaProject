@@ -1,7 +1,6 @@
 package blog.service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,25 +10,32 @@ import org.springframework.stereotype.Service;
 import javax.mail.internet.MimeMessage;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class MailSender {
-  
-  private JavaMailSender mailSender;
+    JavaMailSender mailSender;
 
-  @Value("${spring.mail.username}")
-  private String username;
+    @Value("${spring.mail.username}")
+    private String username;
 
-  @SneakyThrows
-  public void send(String emailTo, String subject, String text) {
-    MimeMessage mimeMessage = mailSender.createMimeMessage();
+    public MailSender(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
-    MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-    message.setFrom(username);
-    message.setTo(emailTo);
-    message.setSubject(subject);
-    message.setText(text, true);
+    public MailSender() {
+    }
 
-    mailSender.send(mimeMessage);
-  }
+    /**
+     * отправка сообщения на электронную почту пользователя, используется для восстановление пароля
+     */
+    @SneakyThrows
+    public void send(String emailTo, String subject, String text) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+        MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        message.setFrom(username);
+        message.setTo(emailTo);
+        message.setSubject(subject);
+        message.setText(text, true);
+
+        mailSender.send(mimeMessage);
+    }
 }
