@@ -29,7 +29,6 @@ public class ApiPostController {
     private final GlobalSettingsService globalSettingsService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('user:write')")
     public ResponseEntity<?> getAllPosts(
             @RequestParam Integer offset, @RequestParam Integer limit, @RequestParam String mode) {
         List<PostDto> postDtoList = postService.getAllPosts(offset, limit, mode);

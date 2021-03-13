@@ -10,6 +10,7 @@ import lombok.SneakyThrows;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +30,7 @@ import static org.thymeleaf.util.StringUtils.randomAlphanumeric;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${upload.path}")
     private String location;
@@ -66,7 +68,7 @@ public class UserService {
     public void registration(RegistrationDto registrationDto) {
         User user = new User();
         user.setName(registrationDto.getName());
-        String password = new BCryptPasswordEncoder().encode(registrationDto.getPassword());
+        String password = passwordEncoder.encode(registrationDto.getPassword());
         user.setPassword(password);
         user.setEmail(registrationDto.getEmail());
         user.setIsModerator((byte) 0);

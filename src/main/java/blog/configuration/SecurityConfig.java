@@ -30,27 +30,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
     }
 
-//  @Override
-//  protected void configure(HttpSecurity http) throws Exception {
-//    http.csrf()
-//        .disable()
-//        .authorizeRequests()
-//        .antMatchers("/**")
-//        .permitAll()
-//        //        .antMatchers(HttpMethod.GET, "/api/post")
-//        //        .hasAuthority(Permission.USER.getPermission())
-//        //        .antMatchers(HttpMethod.GET, "/api/post/moderation*")
-//        //        .hasAuthority(Permission.MODERATE.getPermission())
-//        .anyRequest()
-//        .authenticated()
-//        .and()
-//        .formLogin()
-//        .disable()
-//        .logout()
-//        .logoutSuccessUrl("login")
-//        .and()
-//        .httpBasic();
-//  }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf()
+        .disable()
+        .authorizeRequests()
+        .antMatchers("/**")
+        .permitAll()
+        //        .antMatchers(HttpMethod.GET, "/api/post")
+        //        .hasAuthority(Permission.USER.getPermission())
+        //        .antMatchers(HttpMethod.GET, "/api/post/moderation*")
+        //        .hasAuthority(Permission.MODERATE.getPermission())
+        .anyRequest()
+        .authenticated()
+        .and()
+        .formLogin()
+        .disable()
+        .logout()
+        .logoutSuccessUrl("login")
+        .and()
+        .httpBasic().disable();
+  }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
