@@ -14,8 +14,12 @@ public class MvcConfig implements WebMvcConfigurer, CommandLineRunner {
     @Value("${upload.path}")
     private String location;
 
+    private final ImageService imageService;
+
     @Autowired
-    private ImageService imageService;
+    public MvcConfig(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -15,8 +15,6 @@ c
 3src/main/java/blog/dto/responseDto/CalendarDto.java,a/c/ac4869597aff646e3a0fbd723b2b53ae507eba66
 f
 6src/main/java/blog/exceptions/BadRequestException.java,5/f/5f9cb4688cef22f083abff90eb2c88e6c6b5ac72
-b
-2src/main/java/blog/model/enums/GlobalSettings.java,e/3/e389314e7bb77d40d4107f67c04b924820af9964
 Y
 )src/main/java/blog/model/CaptchaCode.java,8/6/86037697835069f470e74322817ed064eb0364d9
 d
@@ -33,12 +31,8 @@ d
 4src/main/java/blog/controller/DefaultController.java,1/7/1726a76a5f26468c52dc04b85af12660ad3dc98e
 _
 /src/main/java/blog/dto/requestDto/EmailDto.java,2/1/21559e332407c3c37996cf5babb23772294330ad
-h
-8src/main/java/blog/dto/responseDto/GlobalSettingDto.java,8/6/86252801d25ffcadcea1e226d7b2df9d5af33605
 _
 /src/main/java/blog/dto/responseDto/PostDto.java,c/9/c94df13601a84e53d40525b04c32ff8fbcf32eb7
-[
-+src/main/java/blog/model/GlobalSetting.java,8/a/8a7e21d13e6868edd6ed624a058d204fa7f6c6c2
 R
 "src/main/java/blog/model/Post.java,6/0/6033c26f7fd311a6976fb041058e115afdf82317
 Q
@@ -59,12 +53,6 @@ g
 7src/main/java/blog/controller/ApiGeneralController.java,2/a/2a1e000a9206792786beab398c371add0b816f74
 Z
 *src/main/java/blog/service/TagService.java,a/8/a8ae689e6d8de3ad8d6912b1d2f744242ec83d02
-d
-4src/main/java/blog/service/GlobalSettingService.java,d/7/d7c3d5497c583c02675ebc11ddd256f575549998
-j
-:src/main/java/blog/repository/GlobalSettingRepository.java,8/d/8d8015e3edbdd03f628a28d766a8c67447555826
-`
-0src/main/java/blog/configuration/Datasource.java,2/d/2d5a8eeb2c5e1ac2a64e4592c7e349a9983e76be
 `
 0src/main/java/blog/service/PostVotesService.java,7/7/77fcf75b4a441a6ffe4de433f42b7381b8c31e40
 h
