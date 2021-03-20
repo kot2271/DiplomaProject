@@ -1,12 +1,17 @@
 
-X	java:S125Y"<This block of commented-out lines of code should be removed.(ÊˆÛ³8êäÃäİ.
-X	java:S125]"<This block of commented-out lines of code should be removed.(ÊÿÖÊ8êäÃäİ.
-X	java:S125P"<This block of commented-out lines of code should be removed.(ÊÿÖÊ8êäÃäİ.
-X	java:S125D"<This block of commented-out lines of code should be removed.(ÊÿÖÊ8Û›îãÜ.
+H
+java:S1452T"&Remove usage of generic wildcard type.(Ï§¿Œûÿÿÿÿ8¼ç‘à‚/
+]
+java:S1144":Remove this unused private "getUserResponseEntity" method.(ì²şêşÿÿÿÿ8¼ç‘à‚/
 C
-java:S14526"&Remove usage of generic wildcard type.(Õ×È¬8ô—ÈãÜ.
-X	java:S125@"<This block of commented-out lines of code should be removed.(ÊˆÛ³8š³ïãÜ.
-X	java:S125K"<This block of commented-out lines of code should be removed.(ÈÍî™8ŸÅèãÜ.
-X	java:S125j"<This block of commented-out lines of code should be removed.(ÈÍî™8êäÃäİ.
-F
-java:S1128")Remove this unused import 'lombok.Value'.(ß­ÅŸ8¾ÿ˜¨á.
+java:S1452^"&Remove usage of generic wildcard type.(ó‡Ñ¢8¼ç‘à‚/
+C
+java:S1452?"&Remove usage of generic wildcard type.(¨›íº8¼ç‘à‚/
+B
+java:S1452o"&Remove usage of generic wildcard type.(íÙâM8¼ç‘à‚/
+C
+java:S1452M"&Remove usage of generic wildcard type.(Õ×È¬8¼ç‘à‚/
+C
+java:S14523"&Remove usage of generic wildcard type.(Øı’8¼ç‘à‚/
+H
+java:S1452G"&Remove usage of generic wildcard type.(†øÎùÿÿÿÿ8¼ç‘à‚/
